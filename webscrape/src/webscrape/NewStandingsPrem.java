@@ -1,0 +1,87 @@
+package webscrape;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class NewStandingsPrem
+{
+	public static void main(String[] args)
+	{
+		try
+		{
+			FileWriter file=new FileWriter("C:/Users/s-zhangte/Documents/csv/Tester.csv");
+			String webpage="";
+			for(int i=1992;i<1993;i++)
+	        {
+	           	if(i<1999)
+					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1992+93)+"_Premier_League";
+				else if(i<2009&&i>1998)
+					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%930"+(i-1999)+"_Premier_League";
+				else
+					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1999)+"_Premier_League";                
+	        }
+			read(webpage, file);
+		}
+		catch (IOException ie) 
+		{
+            System.out.println("IOException raised");
+        }
+		
+		
+            
+		
+	}
+	public static void read(String webpage, FileWriter file)
+	{
+		try
+		{
+			URL url = new URL(webpage);
+            BufferedReader readr = 
+              new BufferedReader(new InputStreamReader(url.openStream()));            
+            BufferedWriter download =
+              new BufferedWriter(file);
+           
+            
+            String line;
+            boolean isTable=false;
+            while((line = readr.readLine()) != null)
+            {
+            	if(line.contains("<h2><span class=\"mw-headline\" id=\"League_table\">League table"))
+            		isTable=true;
+            	if(isTable)
+            		if(line.contains("<th scope=\"row\" style=\"text-align: left; white-space:nowrap;font-weight: normal;background-color:"))
+            		{
+            			download.write(line.substring(line.indexOf("\">",line.indexOf("\">")+4)+2,line.indexOf("</a>"))+", ");
+            			for(int j=0;j<8;j++)
+            			{
+            				line=readr.readLine();
+            				line=readr.readLine();
+            				String toPut=line.substring(line.indexOf(";\">")+3);
+            				if(toPut.contains("&#8722;"))
+            					toPut="-"+toPut.substring(7);
+            				download.write(toPut);
+            				if(j!=8)
+            					download.write(", ");
+            			}
+            			download.flush();
+            			download.newLine();
+            		}
+            	
+            }
+		}
+		catch (MalformedURLException mue) 
+		{
+            System.out.println("Malformed URL Exception raised");
+        }
+        catch (IOException ie) 
+		{
+            System.out.println("IOException raised");
+        }
+	}
+}

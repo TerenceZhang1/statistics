@@ -1,7 +1,7 @@
 package webscrape;
-	import java.io.*;
-	import java.net.*;
-	import java.util.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 	
 
 	//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
@@ -36,8 +36,9 @@ package webscrape;
 		              new BufferedWriter(new FileWriter("Download.html"));
 		            
 		            BufferedWriter download =
-		              new BufferedWriter(new FileWriter("C:/Users/s-zhangte/OneDrive - Bellevue School District/csv"));
+		              new BufferedWriter(new FileWriter("C:/Users/s-zhangte/Documents/csv/Test.csv"));
 		              
+		            download.write(5);
 		            // read each line from stream till end
 		            String line;
 		            int num=0;
@@ -61,8 +62,14 @@ package webscrape;
 		                			line=readr.readLine();
 		                			writer.write(line);
 		                			line=readr.readLine();
-		                			news.add(line.substring(line.indexOf(";\">")+3));
+		                			String read=line.substring(line.indexOf(";\">")+3);
+		                			download.write(read);
+		                			if(j!=8)
+		                				download.write(",");
+		                			news.add(read);
 		            			}
+		            			download.newLine();
+		    		            download.flush();
 		            			table.add(news);
 		            		}
 		            	}	
