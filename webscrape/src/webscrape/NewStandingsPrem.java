@@ -15,18 +15,18 @@ public class NewStandingsPrem
 	{
 		try
 		{
-			FileWriter file=new FileWriter("C:/Users/s-zhangte/Documents/csv/Tester.csv");
+			FileWriter file=new FileWriter("C:/Users/s-zhangte/Documents/csv/PremStandings.csv");
 			String webpage="";
-			for(int i=1992;i<1993;i++)
+			for(int i=1992;i<2021;i++)
 	        {
 	           	if(i<1999)
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1992+93)+"_Premier_League";
 				else if(i<2009&&i>1998)
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%930"+(i-1999)+"_Premier_League";
 				else
-					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1999)+"_Premier_League";                
+					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1999)+"_Premier_League";  
+	           	read(webpage, file);
 	        }
-			read(webpage, file);
 		}
 		catch (IOException ie) 
 		{
@@ -57,7 +57,10 @@ public class NewStandingsPrem
             	if(isTable)
             		if(line.contains("<th scope=\"row\" style=\"text-align: left; white-space:nowrap;font-weight: normal;background-color:"))
             		{
-            			download.write(line.substring(line.indexOf("\">",line.indexOf("\">")+4)+2,line.indexOf("</a>"))+", ");
+            			String name=line.substring(line.indexOf("\">",line.indexOf("\">")+4)+2,line.indexOf("</a>"))+", ";
+            			if(name.contains("&amp;"))
+            				name=name.substring(0,name.indexOf("&amp;"))+"and"+name.substring(name.indexOf("&amp;")+5);
+            			download.write(name);
             			for(int j=0;j<8;j++)
             			{
             				line=readr.readLine();
@@ -65,15 +68,22 @@ public class NewStandingsPrem
             				String toPut=line.substring(line.indexOf(";\">")+3);
             				if(toPut.contains("&#8722;"))
             					toPut="-"+toPut.substring(7);
+            				if(j==7&&toPut.length()!=2)
+            					if(toPut.length()!=3)
+            						toPut=toPut.substring(0,2);
+            				
             				download.write(toPut);
             				if(j!=8)
             					download.write(", ");
+            				
             			}
             			download.flush();
             			download.newLine();
             		}
             	
             }
+            download.flush();
+            download.newLine();
 		}
 		catch (MalformedURLException mue) 
 		{
