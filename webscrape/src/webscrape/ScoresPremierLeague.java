@@ -26,6 +26,12 @@ public class ScoresPremierLeague
 	        String line;
 	        while((line=readr.readLine())!=null)
 	        {
+	        	int x=128;
+	        	while(line.length()>x)
+	        	{
+	        		System.out.println(line.substring(0,x));
+	        		line=line.substring(x);
+	        	}
 	        	System.out.println(line);
 	        }
 	        

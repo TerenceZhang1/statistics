@@ -17,7 +17,7 @@ public class NewStandingsPrem
 		{
 			FileWriter file=new FileWriter("C:/Users/s-zhangte/Documents/csv/PremStandings.csv");
 			String webpage="";
-			for(int i=1992;i<2021;i++)
+			for(int i=1992;i<2022;i++)
 	        {
 	           	if(i<1999)
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1992+93)+"_Premier_League";
@@ -25,8 +25,10 @@ public class NewStandingsPrem
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%930"+(i-1999)+"_Premier_League";
 				else
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1999)+"_Premier_League";  
-	           	read(webpage, file);
+	           	readWiki(webpage, file);
 	        }
+			webpage="https://www.fotmob.com/leagues/47/table/Premier-League";
+			//readFotMob(webpage,file);
 		}
 		catch (IOException ie) 
 		{
@@ -37,7 +39,8 @@ public class NewStandingsPrem
             
 		
 	}
-	public static void read(String webpage, FileWriter file)
+	
+	public static void readWiki(String webpage, FileWriter file)
 	{
 		try
 		{
