@@ -17,7 +17,7 @@ public class NewStandingsPrem
 		{
 			FileWriter file=new FileWriter("C:/Users/s-zhangte/Documents/csv/PremStandings.csv");
 			String webpage="";
-			for(int i=1992;i<2022;i++)
+			for(int i=2021;i>1991;i--)
 	        {
 	           	if(i<1999)
 					webpage="https://en.wikipedia.org/wiki/"+i+"%E2%80%93"+(i-1992+93)+"_Premier_League";
