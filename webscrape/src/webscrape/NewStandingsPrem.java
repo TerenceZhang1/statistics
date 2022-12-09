@@ -60,7 +60,7 @@ public class NewStandingsPrem
             	if(isTable)
             		if(line.contains("<th scope=\"row\" style=\"text-align: left; white-space:nowrap;font-weight: normal;background-color:"))
             		{
-            			String name=line.substring(line.indexOf("\">",line.indexOf("\">")+4)+2,line.indexOf("</a>"))+", ";
+            			String name=line.substring(line.indexOf("\">",line.indexOf("\">")+4)+2,line.indexOf("</a>"))+",";
             			if(name.contains("&amp;"))
             				name=name.substring(0,name.indexOf("&amp;"))+"and"+name.substring(name.indexOf("&amp;")+5);
             			download.write(name);
@@ -76,8 +76,8 @@ public class NewStandingsPrem
             						toPut=toPut.substring(0,2);
             				
             				download.write(toPut);
-            				if(j!=8)
-            					download.write(", ");
+            				if(j!=7)
+            					download.write(",");
             				
             			}
             			download.flush();
